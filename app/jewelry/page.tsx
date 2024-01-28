@@ -1,18 +1,30 @@
-'use client'
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import Product from "@/components/Product/Product";
 import useProductData from "@/hooks/useProductData";
+import { useDispatch, useSelector } from "react-redux";
+import { resetSearch } from "@/redux/slices/searchSlice";
 
 const JewelryPage = () => {
   const { products } = useProductData();
+  const searchQuery = useSelector((state) => (state as any)?.search);
+  const dispatch = useDispatch();
 
-  const jewelryProducts = products?.filter(
-    (product) => product.category === `jewelery`
-  );
+  const filteredProducts = products
+    .filter((product) => product.category === "jewelery")
+    .filter((product) =>
+      searchQuery
+        ? product.title.toLowerCase().includes(searchQuery.toLowerCase())
+        : true
+    );
+    
+  useEffect(() => {
+    dispatch(resetSearch(""));
+  },[dispatch]);
 
   return (
     <div className="flex flex-wrap -mx-2">
-      {jewelryProducts?.map((product) => (
+      {filteredProducts?.map((product) => (
         <div
           key={product.id}
           className="w-full sm:w-1/2 md:w-1/2 lg:w-1/4 px-2 mb-4"

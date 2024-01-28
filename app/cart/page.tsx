@@ -58,7 +58,7 @@ export default function Cart() {
                     {truncateTitle(item.title, 2)}{" "}
                     <span className="text-gray-400"> X{item.qty} </span>
                   </span>
-                  <span>$ {item.qty * item.price} </span>
+                  <span>$ {(item.qty * item.price).toFixed(2)} </span>
                 </div>
               ))}
             </div>
@@ -67,7 +67,7 @@ export default function Cart() {
           <div>
             <div className="flex items-center justify-between py-4 font-bold">
               <span>Total </span>
-              <span>${totalPrice}</span>
+              <span>${totalPrice.toFixed(2)}</span>
             </div>
             <button
               type="button"

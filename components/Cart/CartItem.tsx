@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useDispatch } from "react-redux";
 import { decreaseQuantity, increaseQuantity } from "@/redux/slices/cartSlice";
 
-export const truncateTitle = (title, wordsCount = 5) => {
+export const truncateTitle = (title, wordsCount = 3) => {
   const words = title.split(" ");
   return words.slice(0, wordsCount).join(" ");
 };
@@ -39,7 +39,7 @@ const CartItem = ({ item }) => {
       </div>
 
       <div className="flex items-center gap-2">
-        <h4>${item.price}</h4>
+        <h4>${item.price.toFixed(2)}</h4>
       </div>
 
       <div className=" rounded-xl flex  items-center ">

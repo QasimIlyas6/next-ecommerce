@@ -76,7 +76,7 @@ const Product: React.FC<ProductProps> = ({
           <div className="text-slate-700 dark:text-slate-500 text-sm mb-2">
             {category}
           </div>
-          <p className="text-xs h-16 overflow-hidden">{description}</p>
+          <p className="text-xs h-16 pb-5 overflow-hidden">{description}</p>
           <div className="font-light text-sm">
             Price: <span className="mt-2 text-md font-bold"> ${price} </span>{" "}
           </div>

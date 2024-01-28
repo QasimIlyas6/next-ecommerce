@@ -20,7 +20,7 @@ export default function SingleProduct({ params }: { params: { id: string } }) {
   const router = useRouter()
 
   useEffect(() => {
-    fetch(`https://fakestoreapi.com/products/${params.id}`)
+    fetch(`https://fakestoreapi.com/products/${params.id}`, {cache:'no-store'})
       .then((res) => res.json())
       .then((data) => setProduct(data));
   }, [params.id]);
@@ -32,14 +32,15 @@ export default function SingleProduct({ params }: { params: { id: string } }) {
   const {id, title, price, description, image, category} = product
 
   const handleAddToCart = () => {
-    dispatch(addToCart({id, title, price, description, category, image}))
     router.push('/cart')
+    dispatch(addToCart({id, title, price, description, category, image}))
+    
   }
 
   return (
     <div className="container flex items-center justify-around w-full h-96 mt-10">
       <div className="image w-1/2">
-        <div className="rounded-lg w-80 shadow bg-white p-2">
+        <div className="rounded-lg w-80 shadow-xl bg-white p-2">
           <Image
             src={product.image}
             alt={product.image}
@@ -65,7 +66,7 @@ export default function SingleProduct({ params }: { params: { id: string } }) {
           <p className="text-sm">Price</p>
           <p className="font-bold">
             {" "}
-            {"$"} {product.price}
+            {"$"} {product.price.toFixed(2)}
           </p>
         </div>
 

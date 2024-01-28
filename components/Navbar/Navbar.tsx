@@ -1,9 +1,10 @@
-'use client'
+"use client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import NavLink from "./NavLink";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CgShoppingCart } from "react-icons/cg";
+import {searchQuery } from "@/redux/slices/searchSlice";
 
 const Navbar = () => {
   const links = [
@@ -13,15 +14,24 @@ const Navbar = () => {
     { title: `Jewelry`, href: "/jewelry" },
   ];
 
-  const itemsQuantity = useSelector((state) => state?.cart)
- 
+  const [search, setSearch] = useState("");
+  const dispatch = useDispatch();
+
+  const itemsQuantity = useSelector((state) => state?.cart);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    dispatch(searchQuery(search));
+    setSearch("");;
+  };
+
   return (
     <nav className="fixed px-12 top-0 left-0 right-0 z-10 bg-red-50 bg-opacity-100">
       <div className="flex items-center justify-between py-6 ">
         <div className="logo">
           <Link href="/">Ecommerence</Link>
         </div>
-        <div className="links ">
+        <div className="links hidden md:block">
           <ul className="flex items-center justify-between ">
             {links.map((link, index) => (
               <li key={index}>
@@ -30,25 +40,26 @@ const Navbar = () => {
             ))}
           </ul>
         </div>
-        <form className="group relative">
+        <form className="group relative" onSubmit={handleSearch}>
           <svg
             width="20"
             height="20"
             fill="currentColor"
-            className="absolute right-3 top-1/2 -mt-2.5 text-slate-400 pointer-events-none group-focus-within:text-blue-500"
+            className="absolute right-3 top-1/2 -mt-2.5 text-slate-400 pointer-events-none group-focus-within:text-red-100"
             aria-hidden="true"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
             />
           </svg>
           <input
-            className="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 pl-4 pr-8 ring-1 ring-slate-200 shadow-sm"
+            className="focus:ring-2 focus:ring-red-100 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 pl-4 pr-8 ring-1 ring-slate-200 shadow-sm"
             type="text"
-            aria-label="Filter projects"
             placeholder="Filter products..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
         </form>
         <div className="cart">
